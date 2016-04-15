@@ -33,7 +33,7 @@ class Handler(webapp2.RequestHandler):
 
 class MainHandler(Handler):
     def get(self):
-        self.write('Hello world!')
+        self.render('moviequotes.html')
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
