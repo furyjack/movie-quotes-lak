@@ -35,6 +35,10 @@ class MainHandler(Handler):
     def get(self):
         self.render('moviequotes.html')
 
+class AddQuoteAction(Handler):
+    def post(self):
+        self.render('moviequotes.html')
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),('/addquote',AddQuoteAction)
 ], debug=True)
