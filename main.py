@@ -17,6 +17,8 @@
 import webapp2
 import jinja2
 import os
+import logging
+from models import MovieQuote
 template_dir= os.path.join(os.path.dirname(__file__),'templates')
 jinja_env=jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),autoescape=True)
 
@@ -37,7 +39,11 @@ class MainHandler(Handler):
 
 class AddQuoteAction(Handler):
     def post(self):
-        self.render('moviequotes.html')
+        quote=self.request.get('quote')
+        movie=self.request.get('movie')
+        new_movie_quote=MovieQuote(quote=quote,movie=movie)
+        new_movie_quote.put()
+        self.redirect(self.request.referer)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),('/addquote',AddQuoteAction)
