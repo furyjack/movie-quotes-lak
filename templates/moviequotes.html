@@ -3,6 +3,7 @@
 <meta charset="utf-8">
 <head>
 	<title> movie quotes</title>
+	<link rel="stylesheet" type="text/css" href="/static/stylesheets/style.css">
 </head>
 <body>
 <h1>Add A Movie Quote!</h1>
@@ -32,7 +33,7 @@
 <ul>
 {% for movie_quote in moviequotes %}
 <li><b>{{movie_quote.quote}}</b></li>
-<div class="movie">{{movie_quote.movie}}</div>
+<div class="movie">-{{movie_quote.movie}}</div>
 {%endfor%}
 </body>
 </html>
