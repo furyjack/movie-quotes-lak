@@ -42,11 +42,20 @@ class MainHandler(Handler):
 
 class AddQuoteAction(Handler):
     def post(self):
-        quote=self.request.get('quote')
-        movie=self.request.get('movie')
-        new_movie_quote=MovieQuote(parent=self.PARENT_KEY,quote=quote,movie=movie)
-        new_movie_quote.put()
+    	if self.request.get('entity-key'):
+    		movie_quote_key=ndb.Key(urlsafe=self.request.get('entity-key'))
+    		instance=movie_quote_key.get()
+    		instance.quote=self.request.get('quote')
+    		instance.movie=self.request.get('movie')
+    		instance.put()
+    	else:
+	        quote=self.request.get('quote')
+	        movie=self.request.get('movie')
+	        new_movie_quote=MovieQuote(parent=self.PARENT_KEY,quote=quote,movie=movie)
+	        new_movie_quote.put()
         self.redirect(self.request.referer)
+
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),('/addquote',AddQuoteAction)
