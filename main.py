@@ -19,6 +19,7 @@ import jinja2
 import os
 import logging
 from models import MovieQuote
+from google.appengine.ext import ndb
 template_dir= os.path.join(os.path.dirname(__file__),'templates')
 jinja_env=jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),autoescape=True)
 
@@ -32,16 +33,18 @@ class Handler(webapp2.RequestHandler):
         return t.render(params)
     def render(self,template,**kw):
         self.write(self.render_str(template,**kw))
+    PARENT_KEY=ndb.Key("MovieQuotes","root")
 
 class MainHandler(Handler):
     def get(self):
-        self.render('moviequotes.html')
+    	moviequotes=MovieQuote.query(ancestor=self.PARENT_KEY).order(-MovieQuote.last_touch)
+        self.render('moviequotes.html',moviequotes=moviequotes)
 
 class AddQuoteAction(Handler):
     def post(self):
         quote=self.request.get('quote')
         movie=self.request.get('movie')
-        new_movie_quote=MovieQuote(quote=quote,movie=movie)
+        new_movie_quote=MovieQuote(parent=self.PARENT_KEY,quote=quote,movie=movie)
         new_movie_quote.put()
         self.redirect(self.request.referer)
 

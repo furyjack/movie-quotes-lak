@@ -25,5 +25,14 @@
 	</tr>
 </table>
 </form>
+<hr>
+<br>
+<h1>Movie Quotes</h1>
+<br>
+<ul>
+{% for movie_quote in moviequotes %}
+<li><b>{{movie_quote.quote}}</b></li>
+<div class="movie">{{movie_quote.movie}}</div>
+{%endfor%}
 </body>
 </html>
