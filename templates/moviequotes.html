@@ -6,34 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/style.css">
 </head>
 <body>
-<h1>Add A Movie Quote!</h1>
-<form action="/addquote" method="post">
-<table>
-	<tr>
-		<td>Quote: </td>
-		<td><input type="text" name="quote"></td>
 
-	</tr>
-	<tr>
-		<td>Movie: </td>
-		<td><input type="text" name="movie"></td>
-
-	</tr>
-	<tr>
-		<td></td>
-		<td  ><input type="submit" name="submit"></td>
-
-	</tr>
-</table>
-</form>
-<hr>
-<br>
-<h1>Movie Quotes</h1>
-<br>
-<ul>
-{% for movie_quote in moviequotes %}
-<li><b>{{movie_quote.quote}}</b></li>
-<div class="movie">-{{movie_quote.movie}}</div>
-{%endfor%}
 </body>
 </html>
