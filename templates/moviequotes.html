@@ -31,7 +31,7 @@
 	        </div>
 	        <div class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav">
-	            <li><a href="#">Add Quote</a></li>
+	            <li><a data-toggle="modal" data-target="#Add-Quote-Modal" href="#">Add Quote</a></li>
 	           
 	          </ul>
 	          <ul class="nav navbar-nav navbar-right">
@@ -40,6 +40,27 @@
 	        </div><!--/.nav-collapse -->
 	      </div>
 	    </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="Add-Quote-Modal" tabindex="-1" role="dialog" aria-labelledby="ADD-QUOTE" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Quote</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 	</body>
 	</html>
