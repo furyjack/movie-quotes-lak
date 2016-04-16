@@ -33,7 +33,7 @@
 		        </div>
 		        <div class="navbar-collapse collapse">
 		          <ul class="nav navbar-nav">
-		            <li><a data-toggle="modal" data-target="#Add-Quote-Modal" href="#">Add Quote</a></li>
+		            <li><a id="add-movie-quote" data-toggle="modal" data-target="#Insert-Quote-Modal" href="#">Add Quote</a></li>
 		           
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
@@ -65,7 +65,7 @@
 <td><b>{{movie_quote.movie}}</b></td>
 <td class="hidden edit-actions">
 	<!-- Indicates a successful or positive action -->
-<button type="button" class="btn btn-success btn-xs"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+<button data-toggle="modal" data-target="#Insert-Quote-Modal" type="button" class="edit-movie-quote btn btn-success btn-xs"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
 
 <!-- Indicates a dangerous or potentially negative action -->
 <button type="button" class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
@@ -84,7 +84,7 @@
 
 
 	<!-- Modal -->
-		<div class="modal fade" id="Add-Quote-Modal" tabindex="-1" role="dialog" aria-labelledby="ADD-QUOTE" aria-hidden="true">
+		<div class="modal fade" id="Insert-Quote-Modal" tabindex="-1" role="dialog" aria-labelledby="ADD-QUOTE" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
