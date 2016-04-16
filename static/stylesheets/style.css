@@ -3,17 +3,7 @@ body {
   font: 14px Helvetica, serif;
 }
 
-input[name=quote] {
-  width: 300px;
-}
 
-input[name=movie] {
-  float: right;
-}
-
-input[type=submit] {
-  float: right;
-}
 
 ul {
    list-style-type: none;
