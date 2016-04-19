@@ -38,6 +38,8 @@
 		          </ul>
 		          <ul class="nav navbar-nav navbar-right">
 		            <li><a id="toggle-edit" href="#">Edit</a></li>
+		            <li><a id="Sign-up" data-toggle="modal" data-target="#modal-register" href="#">Sign Up</a></li>
+		            <li><a id="Log-In" data-toggle="modal" data-target="#modal-signup" href="#">Log In</a></li>
 		          </ul>
 		        </div><!--/.nav-collapse -->
 		      </div>
@@ -119,8 +121,8 @@
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	        <button type="submit" class="btn btn-primary">Done</button>
 	      </div>
+	      </form>
 	    </div>
-	     </form>
 	  </div>
 	</div>
 
@@ -143,9 +145,94 @@
 	      </div>
 	      </form>
 	    </div>
+	    </div>
 	  </div>
 
+<!---sign up modal-->
+<div class="modal fade in" id="modal-signup" tabindex="-1" role="dialog" aria-labelledby="modal-signup-label" aria-hidden="true"  >
+        	<div class="modal-dialog">
+        		<div class="modal-content">
+        			
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">
+        					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+        				</button>
+        				<h3 class="modal-title" id="modal-login-label">Login to our site</h3>
+        				<p>Enter your username and password to log on:</p>
+        			</div>
+        			
+        			<div class="modal-body">
+        				
+	                    <form role="form" action="" method="post" class="login-form">
+	                    	<div class="form-group">
+	                    		<label class="sr-only" for="form-username">Username</label>
+	                        	<input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username">
+	                        </div>
+	                        <div class="form-group">
+	                        	<label class="sr-only" for="form-password">Password</label>
+	                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+	                        </div>
+	                        <button type="submit" class="btn">Sign in!</button>
+	                    </form>
+	                    
+        			</div>
+        			
+        		</div>
+        	</div>
+        </div>
 
+
+	<div class="modal fade in" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-signup-label" aria-hidden="true"  >
+	        	<div class="modal-dialog">
+	        		<div class="modal-content">
+	        			
+	        			<div class="modal-header">
+	        				<button type="button" class="close" data-dismiss="modal">
+	        					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+	        				</button>
+	        				<h3 class="modal-title" id="modal-login-label">Sign up to our site</h3>
+	        			</div>
+	        			
+	        			<div class="modal-body">
+	        				
+	<form action="/signup" method="post" class="form-horizontal" role="form">
+	  <div class="form-group">
+	    <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
+	    <div class="col-sm-10">
+	      <input type="text" name="username" class="form-control" id="inputEmail3" placeholder="Username">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+	    <div class="col-sm-10">
+	      <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="inputPassword3" class="col-sm-2 control-label">Confirm Password</label>
+	    <div class="col-sm-10">
+	      <input type="password" name="c_password" class="form-control" id="inputPassword3" placeholder=" Confirm Password">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+	    <div class="col-sm-10">
+	      <input type="Email" name="email" class="form-control" id="inputPassword3" placeholder="Email">
+	    </div>
+	  </div>
+	  
+	  <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-10">
+	      <button type="submit" class="btn btn-default">Sign up</button>
+	    </div>
+	  </div>
+	</form>
+		                    
+	        			</div>
+	        			
+	        		</div>
+	        	</div>
+	        </div>
 
 
 		</body>

@@ -70,5 +70,5 @@ class DelQuoteAction(Handler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', WelcomePage),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction)
+    ('/', MainHandler),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction)
 ], debug=True)
