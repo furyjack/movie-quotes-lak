@@ -1,30 +1,18 @@
 body {
-  background: url('/static/images/noise.jpg');
-  font: 14px Helvetica, serif;
+  padding-top: 70px
 }
 
-input[name=quote] {
-  width: 300px;
+@media (min-width: 600px) {
+  .table-wrapper {
+    padding: 10px 30px 5px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: #ddd 2px 2px 0px;
+  }
 }
 
-input[name=movie] {
-  float: right;
+th {
+  font-size: 2em;
 }
 
-input[type=submit] {
-  float: right;
-}
 
-ul {
-   list-style-type: none;
-}
-
-.movie {
-  font-style: italic;
-  margin-left: 12px;
-  margin-bottom: 10px;
-}
-
-td:first-child {
-  width: 50px;
-}
