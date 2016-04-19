@@ -35,6 +35,11 @@ class Handler(webapp2.RequestHandler):
         self.write(self.render_str(template,**kw))
     PARENT_KEY=ndb.Key("MovieQuotes","root")
 
+
+class WelcomePage(Handler):
+	def get(self):
+		self.render('Welcome_Page.html')
+
 class MainHandler(Handler):
     def get(self):
     	moviequotes=MovieQuote.query(ancestor=self.PARENT_KEY).order(-MovieQuote.last_touch)
@@ -65,5 +70,5 @@ class DelQuoteAction(Handler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction)
+    ('/', WelcomePage),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction)
 ], debug=True)
