@@ -55,8 +55,15 @@ class AddQuoteAction(Handler):
 	        new_movie_quote.put()
         self.redirect(self.request.referer)
 
+class DelQuoteAction(Handler):
+    def post(self):
+    	if self.request.get('entity-key-del'):
+    		movie_quote_key=ndb.Key(urlsafe=self.request.get('entity-key-del'))
+    	        movie_quote_key.delete()
+        self.redirect(self.request.referer)
+
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),('/addquote',AddQuoteAction)
+    ('/', MainHandler),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction)
 ], debug=True)

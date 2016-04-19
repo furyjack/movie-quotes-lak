@@ -56,6 +56,18 @@ $(".edit-movie-quote").click(function()
 
 });
 
+$(".del-movie-quote").click(function()
+{
+	  
+   
+  
+
+   entitykey=$(this).find(".entity-key-del").html();
+
+   $("#Delete-Quote-Modal input[name=entity-key-del]").val(entitykey).prop("disabled",false);
+
+});
+
 
 };
 
