@@ -74,7 +74,9 @@
 </button>
 
 <!-- Indicates a dangerous or potentially negative action -->
-<button type="button" class="btn btn-danger btn-xs"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+<button data-toggle="modal" data-target="#Delete-Quote-Modal" type="button" class="del-movie-quote btn btn-danger btn-xs"> <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+<div class="hidden entity-key-del">{{movie_quote.key.urlsafe()}}</div>
+</button>
 
 </td>
 </tr>
@@ -93,12 +95,12 @@
 		<div class="modal fade" id="Insert-Quote-Modal" tabindex="-1" role="dialog" aria-labelledby="ADD-QUOTE" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
+		    <form action="/addquote" method="post" class="form-horizontal" role="form">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Add Quote</h4>
 		      </div>
 		      <div class="modal-body">
-		      <form action="/addquote" method="post" class="form-horizontal" role="form">
 		      <input type="text" name="entity-key" class="hidden">
 		  <div class="form-group">
 		    <label for="Quote" class="col-sm-2 control-label">Quote</label>
@@ -112,15 +114,36 @@
 		      <input type="text" name="movie" class="form-control" id="Movie" placeholder="Movie Title Here">
 		    </div>  
 	      </div>
+	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	        <button type="submit" class="btn btn-primary">Done</button>
 	      </div>
-	      </form>
 	    </div>
+	     </form>
 	  </div>
 	</div>
 
+<div class="modal fade" id="Delete-Quote-Modal" tabindex="-1" role="dialog" aria-labelledby="DEL-QUOTE" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		    <form action="/delquote" method="post" class="form-horizontal" role="form">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Delete Quote</h4>
+		      </div>
+		      <div class="modal-body">
+		       <input type="text" name="entity-key-del" class="hidden">
+		      <p> Are You Sure You Want To Delete This Quote ?</p>
+		      
+	         </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn  btn-danger btn-primary">Delete</button>
+	      </div>
+	      </form>
+	    </div>
+	  </div>
 
 
 
