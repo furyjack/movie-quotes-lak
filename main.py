@@ -55,7 +55,10 @@ class Handler(webapp2.RequestHandler):
 
     def read_cookie(self,name):
     	cookie_val=self.request.cookies.get(name)
-    	return cookie_val.split('|')[0] and check_secure_val(cookie_val)
+    	if cookie_val == None:
+    		return None
+    	else:
+    	    return cookie_val.split('|')[0] and check_secure_val(cookie_val)
 
     def make_salt(self):
           return ''.join(random.choice(string.letters) for i in range(5))
@@ -117,7 +120,7 @@ class LogInHandler(Handler):
 	    Username=self.request.get('username')
 	    Password=self.request.get('password')
 	    u=User.by_name(Username)
-	    if self.valid_pw(Username,Password,u.pass_hash):
+	    if u and self.valid_pw(Username,Password,u.pass_hash):
 	       self.set_cookie('user',Username)
 	    self.redirect(self.request.referer)
 

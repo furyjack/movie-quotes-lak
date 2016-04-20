@@ -90,6 +90,7 @@ if( $(".user").html() !="")
   $("#Sign-up").addClass("hidden")
   $("#Log-In").addClass("hidden")
   $("#pser").removeClass("hidden")
+  $("#add-movie-quote").removeClass("hidden")
   $("#pser").html("Welcome , " + $(".user").html());
   $("#logout").removeClass("hidden")
   $("#toggle-edit").removeClass("hidden")
