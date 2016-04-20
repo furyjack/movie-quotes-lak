@@ -104,16 +104,18 @@ class AddQuoteAction(Handler):
 
 class SignUpHandler(Handler):
 
+	
 	def post(self):
 	    Username=self.request.get('username')
 	    Password=self.request.get('password')
+	    Con_Password=self.request.get('c_password')
 	    Email=self.request.get('email')
 	    pw_hash=self.make_pw_hash(Username,Password,None)
 	    U=User(username=Username,pass_hash=pw_hash,email=Email)
 	    U.put()
 	    self.set_cookie('user',Username)
 	    self.redirect(self.request.referer)
-
+	   
 class LogInHandler(Handler):
 
 	def post(self):
