@@ -57,6 +57,19 @@ class Handler(webapp2.RequestHandler):
     	cookie_val=self.request.cookies.get(name)
     	return cookie_val.split('|')[0] and check_secure_val(cookie_val)
 
+    def make_salt(self):
+          return ''.join(random.choice(string.letters) for i in range(5))
+	
+    def make_pw_hash(self,name, pw,salt=None):
+         if not salt:
+          salt=self.make_salt()
+         s=hashlib.sha256(name+pw+salt).hexdigest() +'|'+salt
+         return s
+
+    def valid_pw(self,name,pw,h):
+	salt=h.split('|')[1]
+	return h==self.make_pw_hash(name,pw,salt)
+
 
 class WelcomePage(Handler):
 	def get(self):
@@ -87,14 +100,6 @@ class AddQuoteAction(Handler):
         self.redirect(self.request.referer)
 
 class SignUpHandler(Handler):
-	def make_salt(self):
-          return ''.join(random.choice(string.letters) for i in range(5))
-	
-	def make_pw_hash(self,name, pw,salt=None):
-         if not salt:
-          salt=self.make_salt()
-         s=hashlib.sha256(name+pw+salt).hexdigest() +'|'+salt
-         return s
 
 	def post(self):
 	    Username=self.request.get('username')
@@ -106,7 +111,21 @@ class SignUpHandler(Handler):
 	    self.set_cookie('user',Username)
 	    self.redirect(self.request.referer)
 
+class LogInHandler(Handler):
 
+	def post(self):
+	    Username=self.request.get('username')
+	    Password=self.request.get('password')
+	    u=User.by_name(Username)
+	    if self.valid_pw(Username,Password,u.pass_hash):
+	       self.set_cookie('user',Username)
+	    self.redirect(self.request.referer)
+
+class LogOutHandler(Handler):
+	def get(self):
+		self.response.headers.add_header('Set-Cookie','user=',path='/')
+		self.redirect('/')
+		
 		
 
 class DelQuoteAction(Handler):
@@ -119,5 +138,5 @@ class DelQuoteAction(Handler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction),('/signup',SignUpHandler)
+    ('/', MainHandler),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction),('/signup',SignUpHandler),('/login',LogInHandler),('/logout',LogOutHandler)
 ], debug=True)

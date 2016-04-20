@@ -91,6 +91,8 @@ if( $(".user").html() !="")
   $("#Log-In").addClass("hidden")
   $("#pser").removeClass("hidden")
   $("#pser").html("Welcome , " + $(".user").html());
+  $("#logout").removeClass("hidden")
+  $("#toggle-edit").removeClass("hidden")
 }
 
 
