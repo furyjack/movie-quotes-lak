@@ -18,11 +18,24 @@ import webapp2
 import jinja2
 import os
 import logging
+import random
+import string
+import hashlib
+import hmac
 from models import MovieQuote
+from models import User
 from google.appengine.ext import ndb
 template_dir= os.path.join(os.path.dirname(__file__),'templates')
 jinja_env=jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),autoescape=True)
+secret="blablabla"
 
+def make_secure_val(val):
+	return val + '|' + hmac.new(secret,val).hexdigest()
+
+def check_secure_val(secure_val):
+	val=secure_val.split('|')[0]
+	if secure_val==make_secure_val(val):
+		return val
 
 
 class Handler(webapp2.RequestHandler):
@@ -34,6 +47,15 @@ class Handler(webapp2.RequestHandler):
     def render(self,template,**kw):
         self.write(self.render_str(template,**kw))
     PARENT_KEY=ndb.Key("MovieQuotes","root")
+    def set_cookie(self,name,val):
+    	#check last line possible error
+    	cookie_val=make_secure_val(val)
+    	cookie_val=str(cookie_val)
+    	self.response.headers.add_header('Set-Cookie','%s=%s' % (name,cookie_val),path='/')
+
+    def read_cookie(self,name):
+    	cookie_val=self.request.cookies.get(name)
+    	return cookie_val.split('|')[0] and check_secure_val(cookie_val)
 
 
 class WelcomePage(Handler):
@@ -43,7 +65,11 @@ class WelcomePage(Handler):
 class MainHandler(Handler):
     def get(self):
     	moviequotes=MovieQuote.query(ancestor=self.PARENT_KEY).order(-MovieQuote.last_touch)
-        self.render('moviequotes.html',moviequotes=moviequotes)
+    	u=self.read_cookie('user')
+    	if u==None:
+    		self.render('moviequotes.html',moviequotes=moviequotes,user="")
+        else:
+            self.render('moviequotes.html',moviequotes=moviequotes,user=u)
 
 class AddQuoteAction(Handler):
     def post(self):
@@ -60,6 +86,29 @@ class AddQuoteAction(Handler):
 	        new_movie_quote.put()
         self.redirect(self.request.referer)
 
+class SignUpHandler(Handler):
+	def make_salt(self):
+          return ''.join(random.choice(string.letters) for i in range(5))
+	
+	def make_pw_hash(self,name, pw,salt=None):
+         if not salt:
+          salt=self.make_salt()
+         s=hashlib.sha256(name+pw+salt).hexdigest() +'|'+salt
+         return s
+
+	def post(self):
+	    Username=self.request.get('username')
+	    Password=self.request.get('password')
+	    Email=self.request.get('email')
+	    pw_hash=self.make_pw_hash(Username,Password,None)
+	    U=User(username=Username,pass_hash=pw_hash,email=Email)
+	    U.put()
+	    self.set_cookie('user',Username)
+	    self.redirect(self.request.referer)
+
+
+		
+
 class DelQuoteAction(Handler):
     def post(self):
     	if self.request.get('entity-key-del'):
@@ -70,5 +119,5 @@ class DelQuoteAction(Handler):
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction)
+    ('/', MainHandler),('/addquote',AddQuoteAction),('/delquote',DelQuoteAction),('/signup',SignUpHandler)
 ], debug=True)

@@ -82,6 +82,20 @@ $("input[name=quote]").focus();
 
 });
 
+rh.mq.initialize_user=function()
+{
+
+if( $(".user").html() !="")
+{
+  $("#Sign-up").addClass("hidden")
+  $("#Log-In").addClass("hidden")
+  $("#pser").removeClass("hidden")
+  $("#pser").html("Welcome , " + $(".user").html());
+}
+
+
+};
+
 
 }
 
@@ -90,6 +104,8 @@ $(document).ready(function()
 {
  rh.mq.enableButtons();
  rh.mq.ModelOpenListnen();
+ rh.mq.initialize_user();
+ console.log($(".user").html())
 
 }
 
