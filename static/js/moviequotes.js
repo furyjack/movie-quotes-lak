@@ -95,6 +95,16 @@ if( $(".user").html() !="")
   $("#logout").removeClass("hidden")
   $("#toggle-edit").removeClass("hidden")
 }
+console.log($(".error").html());
+
+if($(".error").html()=="true")
+{
+   $(".err_msg").removeClass("hidden")
+}
+if($(".error").html()=="wrong")
+{
+   $(".err_wrng_msg").removeClass("hidden")
+}
 
 
 };

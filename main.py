@@ -82,10 +82,23 @@ class MainHandler(Handler):
     def get(self):
     	moviequotes=MovieQuote.query(ancestor=self.PARENT_KEY).order(-MovieQuote.last_touch)
     	u=self.read_cookie('user')
+    	exist=self.read_cookie('exist')
     	if u==None:
-    		self.render('moviequotes.html',moviequotes=moviequotes,user="")
+    	    if exist == 'true':
+            	self.render('moviequotes.html',moviequotes=moviequotes,user="",error="true")
+            elif exist=='wrong':
+            	self.render('moviequotes.html',moviequotes=moviequotes,user="",error="wrong")
+            else:
+            	self.render('moviequotes.html',moviequotes=moviequotes,user="",error="false")
+    		
         else:
-            self.render('moviequotes.html',moviequotes=moviequotes,user=u)
+            if exist=='true':
+            	self.render('moviequotes.html',moviequotes=moviequotes,user=u,error="true")
+            elif exist=='wrong':
+            	self.render('moviequotes.html',moviequotes=moviequotes,user="",error="wrong")
+            else:
+            	self.render('moviequotes.html',moviequotes=moviequotes,user=u,error="false")
+        self.set_cookie('exist','false')
 
 class AddQuoteAction(Handler):
     def post(self):
@@ -107,13 +120,18 @@ class SignUpHandler(Handler):
 	
 	def post(self):
 	    Username=self.request.get('username')
-	    Password=self.request.get('password')
-	    Con_Password=self.request.get('c_password')
-	    Email=self.request.get('email')
-	    pw_hash=self.make_pw_hash(Username,Password,None)
-	    U=User(username=Username,pass_hash=pw_hash,email=Email)
-	    U.put()
-	    self.set_cookie('user',Username)
+	    user_exist=User.by_name(Username)
+	    if not user_exist:
+	    	Password=self.request.get('password')
+	    	Con_Password=self.request.get('c_password')
+	    	Email=self.request.get('email')
+	    	pw_hash=self.make_pw_hash(Username,Password,None)
+	    	U=User(username=Username,pass_hash=pw_hash,email=Email)
+	    	U.put()
+	    	self.set_cookie('user',Username)
+	    	self.set_cookie('exist',"false")
+	    else:
+	    	self.set_cookie('exist',"true")
 	    self.redirect(self.request.referer)
 	   
 class LogInHandler(Handler):
@@ -124,6 +142,8 @@ class LogInHandler(Handler):
 	    u=User.by_name(Username)
 	    if u and self.valid_pw(Username,Password,u.pass_hash):
 	       self.set_cookie('user',Username)
+	    else:
+	    	self.set_cookie('exist','wrong')
 	    self.redirect(self.request.referer)
 
 class LogOutHandler(Handler):

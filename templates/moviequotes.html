@@ -51,6 +51,7 @@
 		    </div>
 
            <div class="user hidden">{{user}}</div>
+           <div class="error hidden">{{error}}</div>
 
 
 <div class="container">
@@ -241,10 +242,15 @@
 	        </div>
 <br>
 <br>
-<div class=" hidden alert alert-danger" role="alert">
+<div class="err_msg hidden alert alert-danger" role="alert">
   <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   <span class="sr-only">Error:</span>
-  Enter a valid email address
+  Username exists
+</div>
+<div class="err_wrng_msg hidden alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  Wrong Username or password
 </div>
 		</body>
 		<script type="text/javascript">
