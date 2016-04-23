@@ -108,7 +108,7 @@ $(document).ready(function()
  rh.mq.enableButtons();
  rh.mq.ModelOpenListnen();
  rh.mq.initialize_user();
- console.log($(".user").html())
+ console.log($(".user").html());
 
 }
 

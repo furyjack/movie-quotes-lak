@@ -256,6 +256,56 @@
                     {
                       fields:{
 
+                      	username:{
+                         validators:{
+
+                            stringLength: {
+                        message: 'username must be between 5 to 10 letters',
+                        max: 10,
+                        min :5
+                        }
+
+                         }
+
+
+
+
+
+
+                      	},
+                        password:{
+                         validators:{
+
+                            stringLength: {
+                        message: 'Password must be greeater than 4 letters',
+                        min :4
+                        }
+
+                         }
+
+
+
+
+
+
+                      	},
+                      	c_password:{
+                         validators:{
+
+                            identical: {
+                       field: 'password',
+                    message: 'The password and its confirm are not the same'
+                        }
+
+                         }
+
+
+
+
+
+
+                      	},
+
                         email :{
 
                            message:"email address is required",
@@ -265,6 +315,10 @@
                            	notEmpty:
                            	{
                            		message:"please provide email"
+                           	},
+                           	emailAddress:
+                           	{
+                           		message:"please provide valid email"
                            	}
                            }
 
