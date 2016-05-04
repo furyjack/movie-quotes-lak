@@ -89,11 +89,22 @@ if( $(".user").html() !="")
 {
   $("#Sign-up").addClass("hidden")
   $("#Log-In").addClass("hidden")
+  $(".g-signin2").addClass("hidden")
   $("#pser").removeClass("hidden")
   $("#add-movie-quote").removeClass("hidden")
   $("#pser").html("Welcome , " + $(".user").html());
   $("#logout").removeClass("hidden")
   $("#toggle-edit").removeClass("hidden")
+}
+if( $(".user").html() =="")
+{
+  $("#Sign-up").removeClass("hidden")
+  $("#Log-In").removeClass("hidden")
+  $("#pser").addClass("hidden")
+  $("#add-movie-quote").addClass("hidden")
+  $("#logout").addClass("hidden")
+  $("#toggle-edit").addClass("hidden")
+  $(".g-signin2").removeClass("hidden")
 }
 console.log($(".error").html());
 
@@ -109,6 +120,33 @@ if($(".error").html()=="wrong")
 
 };
 
+
+}
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  document.cookie = "user="+profile.getName()+";path=/";
+  document.cookie = "exist=true;path='/";
+   $(".user").html(profile.getName());
+
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail());
+  console.log($(".user").html());
+  $(".error").html("false")
+  rh.mq.initialize_user();
+
+}
+function logout() {
+  
+   $(".user").html("");
+   document.cookie="user=";
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+    rh.mq.initialize_user();
+   
 
 }
 
