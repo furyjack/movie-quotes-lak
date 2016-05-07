@@ -21,6 +21,7 @@ import logging
 import random
 import string
 import hashlib
+from google.appengine.api import memcache
 import hmac
 from models import MovieQuote
 from models import User
@@ -52,6 +53,14 @@ class Handler(webapp2.RequestHandler):
     	cookie_val=make_secure_val(val)
     	cookie_val=str(cookie_val)
     	self.response.headers.add_header('Set-Cookie','%s=%s' % (name,cookie_val),path='/')
+    def query_art(self,update=False):
+      key='top'
+      moviequotes=memcache.get(key)
+      if moviequotes==None or update:
+        moviequotes=MovieQuote.query(ancestor=self.PARENT_KEY).order(-MovieQuote.last_touch)
+      moviequotes=list(moviequotes)
+      memcache.set(key,moviequotes)
+      return moviequotes
 
     def read_cookie(self,name):
     	cookie_val=self.request.cookies.get(name)
@@ -78,9 +87,11 @@ class WelcomePage(Handler):
 	def get(self):
 		self.render('Welcome_Page.html')
 
+
 class MainHandler(Handler):
     def get(self):
-    	moviequotes=MovieQuote.query(ancestor=self.PARENT_KEY).order(-MovieQuote.last_touch)
+    	#moviequotes=MovieQuote.query(ancestor=self.PARENT_KEY).order(-MovieQuote.last_touch)
+    	moviequotes=self.query_art()
     	u=self.read_cookie('user')
     	exist=self.read_cookie('exist')
     	if u==None:
@@ -113,6 +124,7 @@ class AddQuoteAction(Handler):
 	        movie=self.request.get('movie')
 	        new_movie_quote=MovieQuote(parent=self.PARENT_KEY,quote=quote,movie=movie)
 	        new_movie_quote.put()
+	self.query_art(True)
         self.redirect(self.request.referer)
 
 class SignUpHandler(Handler):
@@ -158,6 +170,7 @@ class DelQuoteAction(Handler):
     	if self.request.get('entity-key-del'):
     		movie_quote_key=ndb.Key(urlsafe=self.request.get('entity-key-del'))
     	        movie_quote_key.delete()
+    	self.query_art(True)
         self.redirect(self.request.referer)
 
 
